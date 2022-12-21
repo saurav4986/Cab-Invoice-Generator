@@ -6,7 +6,7 @@ public class InvoiceGenerator
     static final int COST_PER_MINUTE = 1;
     static final double MINIMUM_FARE = 5;
 
-    public static void main(String[] args )
+   /* public static void main(String[] args )
     {
         System.out.println( "Welcome to Cab-Invoice-Generator!" );
 
@@ -15,20 +15,18 @@ public class InvoiceGenerator
         double totalFare2 = calculateFare(10, 4); // distance,time
         System.out.println(totalFare);
         System.out.println(totalFare2);
-    }
+    }*/
 
     public static double calculateFare(double distance, int time){
         double totalFare= distance *COST_PER_KM+time*COST_PER_MINUTE;
-        if (totalFare < MINIMUM_FARE)
-            return MINIMUM_FARE;
-        return totalFare;
+        return Math.max(totalFare, MINIMUM_FARE);
     }
 
-    public double calculateFare(Ride[] rides) {
+    public InvoiceSummary calculateFare(Ride[] rides) {
         double totalFare = 0;
         for (Ride ride:rides)
             totalFare += this.calculateFare(ride.distance, ride.time);
-        return totalFare;
+        return new InvoiceSummary(rides.length, totalFare);
     }
 
 
